@@ -22,12 +22,12 @@
 
         <div>
           <i class="fa fa-phone"></i>
-          <p>+233 26 76 42 898 </p>
+          <p>+233 24 09 56 276 </p>
         </div>
 
         <div>
           <i class="fa fa-envelope"></i>
-          <p><a href="mailto:info@agroinnivaj.com">info@agroinnovagh.com</a></p>
+          <p><a href="mailto:info@fbsinnova.com">info@agroinnovagh.com</a></p>
         </div>
 
       </div>
