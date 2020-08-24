@@ -1,8 +1,8 @@
-name: FirebaseDeployment
+name: FTPDeployment
 
 on:
   push:
-    branches: [ development ]
+    branches: [ master ]
 
 jobs:
   build:
