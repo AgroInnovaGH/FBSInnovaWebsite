@@ -27,7 +27,7 @@
 
         <div>
           <i class="fa fa-envelope"></i>
-          <p><a href="mailto:info@fbsinnova.com">info@agroinnovagh.com</a></p>
+          <p><a href="mailto:info@fbsinnova.com">info@fbsinnova.com</a></p>
         </div>
 
       </div>

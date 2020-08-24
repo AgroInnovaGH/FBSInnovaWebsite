@@ -335,6 +335,18 @@
               </div>
 
               <div
+                      class="md-layout-item md-size-20 md-xsmall-size-100"
+                      :class="{ 'text-center': responsive }"
+              >
+                <img
+                        src="../assets/img/partners/mest.jpg"
+                        alt="Rounded Image"
+                        class="rounded"
+                        :class="{ 'responsive-image': responsive }"
+                />
+              </div>
+
+              <div
               class="md-layout-item md-size-20 md-xsmall-size-100 ml-auto"
               :class="{ 'text-center': responsive }"
               >
