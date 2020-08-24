@@ -357,27 +357,7 @@
               />
               </div>
 
-              <div
-                      class="md-layout-item md-size-20 md-xsmall-size-100 ml-auto"
-                      :class="{ 'text-center': responsive }"
-              >
-                <img
-                        :src="img_mofa"
-                        alt="Circle Image"
-                        :class="{ 'responsive-image': responsive }"
-                />
-              </div>
-
-              <div
-                      class="md-layout-item md-size-20 md-xsmall-size-100 ml-auto"
-                      :class="{ 'text-center': responsive }"
-              >
-                <img
-                        :src="img_cocobod"
-                        alt="Thumbnail Image"
-                        :class="{ 'responsive-image': responsive }"
-                />
-              </div>
+              
             </div>
           </div>
 
