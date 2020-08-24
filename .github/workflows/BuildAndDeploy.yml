@@ -1,0 +1,27 @@
+name: FirebaseDeployment
+
+on:
+  push:
+    branches: [ development ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      
+      - name: Setup Node
+        uses: actions/setup-node@master
+      - name: Install Dependencies and Build
+        run: |
+            npm ci
+            npm run build
+      - name: FTP deploy
+        uses: sebastianpopp/ftp-action@releases/v2
+        with:
+            host: ${{ secrets.FTP_HOST }}
+            user: ${{ secrets.FTP_USER }}
+            password: ${{ secrets.FTP_PASS }}
+            localDir: "dist"
