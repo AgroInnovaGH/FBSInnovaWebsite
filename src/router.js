@@ -45,6 +45,11 @@ export default new Router({
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: "black" }
       }
+    },
+    {
+      path: "/en/privacy-policy",
+      name: 'en-privacy-policy',
+      component: ()=>import('@/views/PrivacyPolicy/EnglishPrivacyPolicy.vue')
     }
   ],
   scrollBehavior: to => {
