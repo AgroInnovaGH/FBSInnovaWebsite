@@ -49,7 +49,7 @@
 
               <md-list-item
                       target="_blank"
-                href="https://play.google.com/store/apps/details?id=com.agroinnova.farmerbusinessschool"
+                href="https://play.google.com/store/apps/details?id=com.agroinnova.farmerbusinessschool2&hl=en&gl=US"
                 @click="scrollToElement()"
                 v-if="showDownload"
               >
