@@ -15,7 +15,7 @@ jobs:
       - name: Install Dependencies
         uses: actions/setup-node@v3
         with:
-            node-version: 12
+          version: 12
         run: |
             npm ci
             npm run build
