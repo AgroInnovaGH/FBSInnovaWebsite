@@ -15,8 +15,9 @@ jobs:
       - name: Install Dependencies
         uses: actions/setup-node@v3
         with:
-            node-version: 12
-          run: |
+          version: 12
+      - name: Dependencies
+        run: |
             npm ci
             npm run build
       - name: FTP deploy
