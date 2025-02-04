@@ -57,7 +57,12 @@ import MainNav from '@/layout/MainNavbar.vue'
 import MainNavbar from '../../layout/MainNavbar.vue'
 import MainFooter from '../../layout/MainFooter.vue'
 export default {
-    components: { MainNav, MainFooter }
+    components: { MainNav, MainFooter },
+    data(){
+        return {
+            language: ''
+        }
+    }
 }
 </script>
 
