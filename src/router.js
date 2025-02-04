@@ -50,7 +50,12 @@ export default new Router({
       path: "/en/privacy-policy",
       name: 'en-privacy-policy',
       component: ()=>import('@/views/PrivacyPolicy/EnglishPrivacyPolicy.vue')
-    }
+    },
+    {
+      path: "/fr/privacy-policy",
+      name: 'en-privacy-policy',
+      component: ()=>import('@/views/PrivacyPolicy/FrenchPrivacyPolicy.vue')
+    },
   ],
   scrollBehavior: to => {
     if (to.hash) {
