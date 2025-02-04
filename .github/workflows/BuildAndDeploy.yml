@@ -17,9 +17,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14  # Use Node 14 for compatibility with node-sass
+          node-version: 14  # Node 14 for compatibility with node-sass
 
-      # Step 3: Cache node_modules
+      # Step 3: Cache node_modules (Optional, speeds up builds)
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
@@ -31,16 +31,20 @@ jobs:
       # Step 4: Install dependencies and build the Vue app
       - name: Install Dependencies and Build
         run: |
-          npm ci
-          npx vue-cli-service build
+          npm ci --prefer-online
+          ./node_modules/.bin/vue-cli-service build  # Directly reference vue-cli-service
         env:
           NODE_ENV: production
 
-      # Step 5: Verify the dist folder
+      # Step 5: Verify that the dist folder exists and list its contents
       - name: Verify dist folder
         run: ls -la dist
 
-      # Step 6: Deploy to FTP server
+      # Step 6: Check the size of the dist folder
+      - name: Check dist folder size
+        run: du -sh dist
+
+      # Step 7: Deploy to FTP server
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
