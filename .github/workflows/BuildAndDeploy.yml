@@ -17,9 +17,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16  # Use Node 16 for better compatibility and security
+          node-version: 14  # Use Node 14 for compatibility with node-sass
 
-      # Step 3: Cache node_modules for faster builds
+      # Step 3: Cache node_modules
       - name: Cache node_modules
         uses: actions/cache@v3
         with:
@@ -31,20 +31,16 @@ jobs:
       # Step 4: Install dependencies and build the Vue app
       - name: Install Dependencies and Build
         run: |
-          npm ci  # Clean install dependencies
-          npm run build  # Build the Vue app
+          npm ci
+          npx vue-cli-service build
         env:
           NODE_ENV: production
 
-      # Step 5: Verify that the dist folder exists and list its contents
+      # Step 5: Verify the dist folder
       - name: Verify dist folder
         run: ls -la dist
 
-      # Step 6: Check the size of the dist folder (helps identify if it's too large)
-      - name: Check dist folder size
-        run: du -sh dist
-
-      # Step 7: Deploy to FTP server
+      # Step 6: Deploy to FTP server
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -52,10 +48,10 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           local-dir: "dist"
-          dangerous-clean-slate: true  # Cleans remote server before deploying
-          log-level: verbose           # Provides detailed logging
+          dangerous-clean-slate: true
+          log-level: verbose
           exclude: |
-            **/*.map                  # Exclude source map files to reduce deployment size
+            **/*.map
             node_modules/
             .git/
             .github/
