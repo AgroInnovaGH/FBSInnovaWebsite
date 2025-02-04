@@ -1,4 +1,4 @@
-name: Vue FTPDeployment
+name: Vue App FTP Deployment
 
 on:
   push:
@@ -9,24 +9,42 @@ jobs:
     name: Build and Deploy Vue App
     runs-on: ubuntu-latest
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16  # Use Node 16 for better compatibility and security
 
+      # Step 3: Cache node_modules for faster builds
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-
+
+      # Step 4: Install dependencies and build the Vue app
       - name: Install Dependencies and Build
         run: |
-          npm ci
-          npm run build
+          npm ci  # Clean install dependencies
+          npm run build  # Build the Vue app
         env:
           NODE_ENV: production
 
+      # Step 5: Verify that the dist folder exists and list its contents
       - name: Verify dist folder
         run: ls -la dist
 
+      # Step 6: Check the size of the dist folder (helps identify if it's too large)
+      - name: Check dist folder size
+        run: du -sh dist
+
+      # Step 7: Deploy to FTP server
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -34,5 +52,10 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           local-dir: "dist"
-          dangerous-clean-slate: true
-          log-level: verbose
+          dangerous-clean-slate: true  # Cleans remote server before deploying
+          log-level: verbose           # Provides detailed logging
+          exclude: |
+            **/*.map                  # Exclude source map files to reduce deployment size
+            node_modules/
+            .git/
+            .github/
