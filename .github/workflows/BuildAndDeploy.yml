@@ -9,39 +9,28 @@ jobs:
     name: Build and Deploy Vue App
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Checkout the repository
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14  # Node 14 for compatibility with node-sass
+          node-version: 14
 
-      # Step 3: Clear cache and install dependencies
       - name: Clear Cache and Install Dependencies
         run: |
           rm -rf node_modules
-          npm ci  # fresh install without cache
+          npm ci --prefer-online
 
-      # Step 4: Verify installation and build the Vue app
-      - name: Verify vue-cli-service and Build
+      - name: Build Vue App
         run: |
-          ls -la node_modules/.bin  # Check if vue-cli-service is installed
           ./node_modules/.bin/vue-cli-service build
         env:
           NODE_ENV: production
 
-      # Step 5: Verify dist folder
       - name: Verify dist folder
         run: ls -la dist
 
-      # Step 6: Check dist folder size
-      - name: Check dist folder size
-        run: du -sh dist
-
-      # Step 7: Deploy to FTP server
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -51,6 +40,8 @@ jobs:
           local-dir: "dist/"
           dangerous-clean-slate: true
           log-level: verbose
+          passive: true
+          options: "--timeout=60"
           exclude: |
             **/*.map
             node_modules/
