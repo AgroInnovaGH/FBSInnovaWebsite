@@ -41,18 +41,15 @@ jobs:
       - name: Check dist folder size
         run: du -sh dist
 
-      # Step 7: Deploy to FTP server
+      # Step 7: Deploy to FTP server (with possible fixes)
       - name: FTP Deploy
         uses: sebastianpopp/ftp-action@releases/v2
         with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
+          host: ${{ secrets.FTP_HOST }}  # Ensure correct FTP host URL
+          user: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
-          local-dir: "dist/"
+          localDir: "dist/"  # Ensure the folder ends with a slash
           dangerous-clean-slate: true
           log-level: verbose
-          exclude: |
-            **/*.map
-            node_modules/
-            .git/
-            .github/
+          forceSsl: true  # Enable SSL if required
+          passive: true    # Enable passive mode if needed
