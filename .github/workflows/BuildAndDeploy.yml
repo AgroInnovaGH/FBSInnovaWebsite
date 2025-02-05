@@ -31,7 +31,8 @@ jobs:
       # Step 4: Install dependencies and build the Vue app
       - name: Install Dependencies and Build
         run: |
-          npm ci --prefer-online
+          npm ci --prefer-online  # Ensures fresh install
+          ls -la node_modules/.bin  # Debug step to check if vue-cli-service is here
           ./node_modules/.bin/vue-cli-service build  # Directly reference vue-cli-service
         env:
           NODE_ENV: production
