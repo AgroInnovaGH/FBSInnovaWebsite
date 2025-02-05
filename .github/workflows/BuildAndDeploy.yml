@@ -19,29 +19,25 @@ jobs:
         with:
           node-version: 14  # Node 14 for compatibility with node-sass
 
-      # Step 3: Cache node_modules (Optional, speeds up builds)
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node_modules-
-
-      # Step 4: Install dependencies and build the Vue app
-      - name: Install Dependencies and Build
+      # Step 3: Clear cache and install dependencies
+      - name: Clear Cache and Install Dependencies
         run: |
-          npm ci --prefer-online  # Ensures fresh install
-          ls -la node_modules/.bin  # Debug step to check if vue-cli-service is here
-          ./node_modules/.bin/vue-cli-service build  # Directly reference vue-cli-service
+          rm -rf node_modules
+          npm ci  # fresh install without cache
+
+      # Step 4: Verify installation and build the Vue app
+      - name: Verify vue-cli-service and Build
+        run: |
+          ls -la node_modules/.bin  # Check if vue-cli-service is installed
+          ./node_modules/.bin/vue-cli-service build
         env:
           NODE_ENV: production
 
-      # Step 5: Verify that the dist folder exists and list its contents
+      # Step 5: Verify dist folder
       - name: Verify dist folder
         run: ls -la dist
 
-      # Step 6: Check the size of the dist folder
+      # Step 6: Check dist folder size
       - name: Check dist folder size
         run: du -sh dist
 
