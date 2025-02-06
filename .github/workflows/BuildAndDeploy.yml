@@ -17,19 +17,20 @@ jobs:
         with:
           node-version: 14
 
-      - name: Clear Cache and Install Dependencies
+      - name: Install Dependencies
         run: |
           rm -rf node_modules
           npm ci --prefer-online
 
       - name: Build Vue App
-        run: |
-          ./node_modules/.bin/vue-cli-service build
+        run: ./node_modules/.bin/vue-cli-service build
         env:
           NODE_ENV: production
 
       - name: Verify dist folder
-        run: ls -la dist
+        run: |
+          if [ ! -d "dist" ]; then echo "dist folder not found!"; exit 1; fi
+          ls -la dist
 
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -41,7 +42,7 @@ jobs:
           dangerous-clean-slate: true
           log-level: verbose
           passive: true
-          options: "--timeout=60"
+          options: "--timeout=120"
           exclude: |
             **/*.map
             node_modules/
